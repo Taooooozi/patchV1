@@ -2,13 +2,10 @@
 #include <stdlib.h>
 #include <string>
 
-//const wchar_t* path = L".:/root/miniconda3/envs/general/lib/python310.zip:/root/miniconda3/envs/general/lib/python3.10:/root/miniconda3/envs/general/lib/python3.10/lib-dynload:/root/miniconda3/envs/general/lib/python3.10/site-packages";
+const wchar_t* path = L".:/root/miniconda3/envs/general/lib/python310.zip:/root/miniconda3/envs/general/lib/python3.10:/root/miniconda3/envs/general/lib/python3.10/lib-dynload:/root/miniconda3/envs/general/lib/python3.10/site-packages";
 
 int sample_2D_Gaussian(Float nsig, int n, Float wv, Float x[], Float y[], Float w[]) {
-    //PySys_SetPath(path);  // path to the module to import
-    //
-    //PyRun_SimpleString("import sys");
-    //PyRun_SimpleString("sys.path.insert(0, \"/home/wd/repos/patchV1/src/util\")");
+    PySys_SetPath(path);  // path to the module to import
     PyObject *pName = PyUnicode_FromString("sampler");
     PyObject *pModule = PyImport_Import(pName);
     Py_DECREF(pName);
@@ -36,10 +33,6 @@ int sample_2D_Gaussian(Float nsig, int n, Float wv, Float x[], Float y[], Float 
                     x[i] = static_cast<Float>(d_x[i]);
                     y[i] = static_cast<Float>(d_y[i]);
                     w[i] = static_cast<Float>(d_w[i]);
-                    if (i==0 || i == n-1)
-                    {
-                        printf("x[%i] = %.3f, y[%i] = %.3f, w[%i] = %.3f\n", i, x[i], i, y[i], i, w[i]);
-                    }
                 }
                 Py_DECREF(pValue);
             } else { 
@@ -61,7 +54,6 @@ int sample_2D_Gaussian(Float nsig, int n, Float wv, Float x[], Float y[], Float 
         printf("Failed to load %s\n", "sampler");
         return 1;
     }
-    return 0;
 }
 
 int sample_2D_Gaussian_difference(Float nsig, Float sigRatio, int n, Float x[], Float y[], Float w[]) {

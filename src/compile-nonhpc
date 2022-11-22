@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# optflag=O0
-optflag=g
-gptflag=G
-# gptflag=lineinfo
+optflag=O0
+# optflag=g
+# gptflag=G
+gptflag=lineinfo
 cpp_version=c++17
 #fast_math=' -use_fast_math'
 fast_math=''

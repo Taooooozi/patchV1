@@ -10,7 +10,8 @@ int main(int argc, char** argv) {
 	cout << nDevice << " gpu on the node\n";
 	int iDevice;
 	size_t maxFree = 0;
-	for (PosInt i = 0; i < nDevice; i++) {
+	// for (PosInt i = 0; i < nDevice; i++) {
+	for (PosInt i = 1; i < 2; i++) {
 		checkCudaErrors(cudaSetDevice(i));
 		size_t free;
 		size_t total;
@@ -5208,8 +5209,7 @@ int main(int argc, char** argv) {
             checkCudaErrors(cudaMalloc((void**) &d_sample_x1, nSample * sizeof(Float)));
             checkCudaErrors(cudaMalloc((void**) &d_sample_y1, nSample * sizeof(Float)));
             checkCudaErrors(cudaMalloc((void**) &d_sample_w1, nSample * sizeof(Float)));
-            int ret = sample_2D_Gaussian(-nsig, int(nSample), wv, sample_x1, sample_y1, sample_w1);
-            if (ret == 1) return EXIT_FAILURE;
+            sample_2D_Gaussian(-nsig, int(nSample), wv, sample_x1, sample_y1, sample_w1);
             checkCudaErrors(cudaMemcpy(d_sample_x1, sample_x1, nSample * sizeof(Float), cudaMemcpyHostToDevice));
             checkCudaErrors(cudaMemcpy(d_sample_y1, sample_y1, nSample * sizeof(Float), cudaMemcpyHostToDevice));
             checkCudaErrors(cudaMemcpy(d_sample_w1, sample_w1, nSample * sizeof(Float), cudaMemcpyHostToDevice));
@@ -5221,8 +5221,7 @@ int main(int argc, char** argv) {
             checkCudaErrors(cudaMalloc((void**) &d_sample_x2, nSample * sizeof(Float)));
             checkCudaErrors(cudaMalloc((void**) &d_sample_y2, nSample * sizeof(Float)));
             checkCudaErrors(cudaMalloc((void**) &d_sample_w2, nSample * sizeof(Float)));
-            int ret = sample_2D_Gaussian_difference(-nsig, sigRatio, nSample, sample_x2, sample_y2, sample_w2);
-            if (ret == 1) return EXIT_FAILURE;
+            sample_2D_Gaussian_difference(-nsig, sigRatio, nSample, sample_x2, sample_y2, sample_w2);
             checkCudaErrors(cudaMemcpy(d_sample_x2, sample_x2, nSample * sizeof(Float), cudaMemcpyHostToDevice));
             checkCudaErrors(cudaMemcpy(d_sample_y2, sample_y2, nSample * sizeof(Float), cudaMemcpyHostToDevice));
             checkCudaErrors(cudaMemcpy(d_sample_w2, sample_w2, nSample * sizeof(Float), cudaMemcpyHostToDevice));
@@ -5343,24 +5342,24 @@ int main(int argc, char** argv) {
     cudaEventRecord(storeReady, 0);
     cudaEventSynchronize(storeReady);
 	cout << "convol parameters stored\n";
-    if (nsig < 0) {
-        if (nParvo > 0) {
-            delete []sample_x1;
-            delete []sample_y1;
-            delete []sample_w1;
-            checkCudaErrors(cudaFree(d_sample_x1));
-            checkCudaErrors(cudaFree(d_sample_y1));
-            checkCudaErrors(cudaFree(d_sample_w1));
-        }
-        if (nMagno > 0) {
-            delete []sample_x2;
-            delete []sample_y2;
-            delete []sample_w2;
-            checkCudaErrors(cudaFree(d_sample_x2));
-            checkCudaErrors(cudaFree(d_sample_y2));
-            checkCudaErrors(cudaFree(d_sample_w2));
-        }
-    }
+	if (nsig < 0){
+		if (nParvo > 0) {
+			delete []sample_x1;
+			delete []sample_y1;
+			delete []sample_w1;
+			checkCudaErrors(cudaFree(d_sample_x1));
+			checkCudaErrors(cudaFree(d_sample_y1));
+			checkCudaErrors(cudaFree(d_sample_w1));
+		}
+		if (nMagno > 0) {
+			delete []sample_x2;
+			delete []sample_y2;
+			delete []sample_w2;
+			checkCudaErrors(cudaFree(d_sample_x2));
+			checkCudaErrors(cudaFree(d_sample_y2));
+			checkCudaErrors(cudaFree(d_sample_w2));
+		}
+	}
     Float* tmp_maxConvol;
     if (virtual_LGN) {
 	    checkCudaErrors(cudaMalloc((void **) &tmp_maxConvol, nLGN*sizeof(Float)));
