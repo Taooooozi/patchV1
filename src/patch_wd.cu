@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
 	int iDevice;
 	size_t maxFree = 0;
 	//for (PosInt i = 0; i < nDevice; i++) {
-	for (PosInt i = 1; i < 3; i++) {
+	for (PosInt i = 0; i < 1; i++) {
 		checkCudaErrors(cudaSetDevice(i));
 		size_t free;
 		size_t total;
@@ -6324,7 +6324,6 @@ int main(int argc, char** argv) {
         #ifdef SYNC
             checkCudaErrors(cudaDeviceSynchronize());
         #endif
-        checkCudaErrors(cudaDeviceSynchronize());
 		cudaEventRecord(d_spReady, mainStream);
         varSlot = (varSlot+1)%2;
         // send LGN_fr, currentConvol, luminance, contrast
@@ -6526,7 +6525,6 @@ int main(int argc, char** argv) {
             #ifdef SYNC
                 checkCudaErrors(cudaDeviceSynchronize());
             #endif
-            checkCudaErrors(cudaDeviceSynchronize());
 			cudaEventRecord(gReady[i], stream[i%matConcurrency]);
 			cudaEventRecord(gapReady[i], stream[i%matConcurrency]);
 
@@ -6700,11 +6698,12 @@ int main(int argc, char** argv) {
 		        cudaEventRecord(gapReady[0], gapStream[0]);
 		    }
         }
+		for (PosInt i = 0; i < nChunk; i++) {
+		    cudaStreamWaitEvent(mainStream, gReady[i]);
+		    cudaStreamWaitEvent(mainStream, gapReady[i]);
+        }
         if (!minimal) { // learnData_FF post vAvgEx2,I (fr)
             if (learnData_FF > 1 || (store_dsLGN && (it+1)%sampleInterval_LGN_V1 == 0) || (takeSnapShot && learning)) {
-		        for (PosInt i = 0; i < matConcurrency; i++) {
-		            cudaStreamWaitEvent(mainStream, gReady[i], 0);
-                }
                 #ifdef CHECK
 		            checkCudaErrors(cudaMemcpyAsync(lVarFFpost+learnVarFFsize0, learnVar+learnVarFFsize0, learnVarFFsize1*sizeof(Float), cudaMemcpyDeviceToHost, mainStream));
                 #else

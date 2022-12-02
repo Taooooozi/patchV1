@@ -5,17 +5,17 @@ set -e
 repo=$HOME/repos/patchV1
 cfg_fdr=${repo}/src
 fdr0=/root/autodl-tmp/ljy
-res_fdr=/root/autodl-tmp/ljy/resource_merge_test # stimulus, V1-static and LGN-static files
+res_fdr=/root/autodl-tmp/ljy/resource_new_sample_test # stimulus, V1-static and LGN-static files
 setup_fdr=$fdr0/setup_merge_test # inputFolder in cfg
-data_fdr=$fdr0/data_merge_test # outputFolder in cfg
+data_fdr=$fdr0/data_new_sample_test # outputFolder in cfg
 
-fitTC=True
-nOri=6 # total # orientaton if applicable
+fitTC=False
+nOri=240 # total # orientaton if applicable
 TF=8 # input frequency if applicable
 SF=20
-trial_suffix=merge_test
+trial_suffix=new_sample_test
 singleOri=False
-#singleOri=True
+# singleOri=True
 one_ori=1
 
 res_suffix=minimal-patch
@@ -24,7 +24,7 @@ patch=patch_fast
 generate_V1_connection=False
 generate_LGN_V1_connection=False
 
-patch_cfg=minimal.cfg
+patch_cfg=minimal_new_sample_test.cfg
 
 LGN_V1_suffix=test_lgn
 V1_connectome_suffix=test_v1
@@ -177,10 +177,10 @@ if [ "$plotTConly" = False ]; then
 			./ori.sh > ${fig_fdr}/log/pOri_${date}_${trial_suffix}_${ori}_${plotOnly}.out 2>&1 &
 			jobID+="${!} "
 			wait $jobID
-            # sleep 5
+            # sleep 1
 			if [ "$plotOnly" = False ]; then
 				if [ "${ori}" -lt "${nOri}" ]; then
-					vim -s ${cfg_fdr}/nextOri_cfg.keys ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg
+					vim -s ${cfg_fdr}/nextOri_random_cfg.keys ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg
 					if [ "$((ori+1))" -lt "${nOri}" ]; then
 						cp ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg ${fig_fdr}/${trial_suffix}-ori_$((ori+2)).cfg
 					fi

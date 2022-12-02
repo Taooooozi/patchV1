@@ -1,22 +1,23 @@
 #!/bin/bash
 # plotTConly, fitDataReady/plotOnly, readNewSpike
-set -e
+# set -e
 
 repo=$HOME/repos/patchV1
 cfg_fdr=${repo}/src
 fdr0=/root/autodl-tmp/ljy
-res_fdr=/root/autodl-tmp/ljy/resource_merge_test # stimulus, V1-static and LGN-static files
-setup_fdr=$fdr0/setup_merge_test # inputFolder in cfg
-data_fdr=$fdr0/data_merge_test # outputFolder in cfg
+res_fdr=/root/autodl-tmp/ljy/resource_static_32pixel # stimulus, V1-static and LGN-static files
+setup_fdr=$fdr0/resource_static_32pixel # inputFolder in cfg
+data_fdr=$fdr0/data_static_32pixel # outputFolder in cfg
 
-fitTC=True
-nOri=6 # total # orientaton if applicable
+fitTC=False
+nOri=4320 # total # orientaton if applicable
+# nOri=220 # total # orientaton if applicable
 TF=8 # input frequency if applicable
 SF=20
-trial_suffix=merge_test
+trial_suffix=static_32pixel
 singleOri=False
-#singleOri=True
-one_ori=1
+# singleOri=True
+one_ori=1 #控制从第几个开始
 
 res_suffix=minimal-patch
 patch=patch_fast
@@ -24,7 +25,7 @@ patch=patch_fast
 generate_V1_connection=False
 generate_LGN_V1_connection=False
 
-patch_cfg=minimal.cfg
+patch_cfg=minimal_static_32pixel.cfg
 
 LGN_V1_suffix=test_lgn
 V1_connectome_suffix=test_v1
@@ -129,7 +130,7 @@ else
 fi
 echo plotting files copied
 
-set -e
+# set -e
 jobList=""
 export plotOnly
 export nOri
@@ -157,14 +158,14 @@ date=$(eval date +"%Y_%m_%d_%H-%M-%S")
 if [ "$plotTConly" = False ]; then
 	if [ "$singleOri" = False ]; then
 		if [ "$plotOnly" = False ]; then
-			cp ${cfg_fdr}/${patch_cfg} ${fig_fdr}/${trial_suffix}-ori_1.cfg
-			cp ${fig_fdr}/${trial_suffix}-ori_1.cfg ${fig_fdr}/${trial_suffix}-ori_2.cfg
+			cp ${cfg_fdr}/${patch_cfg} ${fig_fdr}/${trial_suffix}-ori_${one_ori}.cfg
+			cp ${fig_fdr}/${trial_suffix}-ori_${one_ori}.cfg ${fig_fdr}/${trial_suffix}-ori_$((one_ori+1)).cfg
 		fi
 
 		jobID=""
-		for ori in $( seq 1 $nOri )
+		k=0
+		for ori in $( seq $one_ori $nOri )
 		do
-			jobID=""
 			# check 1200
 			# RETURN=$?
 			# while [ $RETURN -eq 1 ];  
@@ -176,15 +177,21 @@ if [ "$plotTConly" = False ]; then
 			export ori
 			./ori.sh > ${fig_fdr}/log/pOri_${date}_${trial_suffix}_${ori}_${plotOnly}.out 2>&1 &
 			jobID+="${!} "
-			wait $jobID
-            # sleep 5
+			# wait $jobID
 			if [ "$plotOnly" = False ]; then
 				if [ "${ori}" -lt "${nOri}" ]; then
-					vim -s ${cfg_fdr}/nextOri_cfg.keys ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg
+					vim -s ${cfg_fdr}/nextOri_random_cfg.keys ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg
 					if [ "$((ori+1))" -lt "${nOri}" ]; then
 						cp ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg ${fig_fdr}/${trial_suffix}-ori_$((ori+2)).cfg
 					fi
 				fi
+			fi
+			k=$((k+1))
+			if [ $k -eq 2 ];then
+				k=0
+				echo $ori
+				wait $jobID
+				jobID=""
 			fi
 		done
 		wait $jobID
