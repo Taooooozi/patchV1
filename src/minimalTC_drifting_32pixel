@@ -8,19 +8,19 @@ conda activate general
 repo=$HOME/repos/patchV1
 cfg_fdr=${repo}/src
 fdr0=/root/autodl-tmp/ljy
-res_fdr=/root/autodl-tmp/ljy/resource_static_32pixel # stimulus, V1-static and LGN-static files
+res_fdr=/root/autodl-tmp/ljy/resource_drifting_32pixel # stimulus, V1-static and LGN-static files
 setup_fdr=$fdr0/resource_static_32pixel # inputFolder in cfg
-data_fdr=$fdr0/data_static_32pixel # outputFolder in cfg
+data_fdr=$fdr0/data_drifting_32pixel # outputFolder in cfg
 
-fitTC=False
-nOri=2160 # total # orientaton if applicable
+fitTC=True
+nOri=6 # total # orientaton if applicable
 # nOri=220 # total # orientaton if applicable
 TF=8 # input frequency if applicable
 SF=20
-trial_suffix=static_32pixel
+trial_suffix=drifting_32pixel
 bin_prefix=sample_OutAndInputCount_ 
-# singleOri=False
-singleOri=True
+singleOri=False
+# singleOri=True
 one_ori=1 #控制从第几个开始
 
 res_suffix=minimal-patch
@@ -29,7 +29,7 @@ patch=patch_fast
 generate_V1_connection=False
 generate_LGN_V1_connection=False
 
-patch_cfg=minimal_static_32pixel.cfg
+patch_cfg=minimal_drifting_32pixel.cfg
 
 LGN_V1_suffix=test_lgn
 V1_connectome_suffix=test_v1
@@ -196,16 +196,16 @@ if [ "$plotTConly" = False ]; then
 				k=0
 				echo $ori
 				wait $jobID
-				echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix}
-				python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix} &
-				echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix}
-				python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix} &
+				# echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix}
+				# python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix} &
+				# echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix}
+				# python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix} &
 				jobID=""
 			fi
 		done
 		wait $jobID
-		# ./plotTC.sh > ${fig_fdr}/log/pTC_${date}_${trial_suffix}.out &
-		# job=$!
+		./plotTC.sh > ${fig_fdr}/log/pTC_${date}_${trial_suffix}.out &
+		job=$!
 	else
 		ori=$one_ori
 		if [ "$plotOnly" = False ]; then
@@ -220,4 +220,4 @@ else
 	job=$!
 fi
 
-#(wait $job && shutdown) &
+(wait $job && shutdown) &

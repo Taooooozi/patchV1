@@ -3063,7 +3063,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[eSpick], isp_OP[0,:], ',m')
+                    ax.plot(tsp[eSpick], isp_OP, ',m')
                 # inh
                 OP_len = [sum(np.logical_and(spScatter[ix]>=step0*dt, spScatter[ix]<(step0+nt_)*dt)) for ix in V1_range[iIpick]]
                 nOP = np.sum(iIpick)
@@ -3075,7 +3075,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[iSpick], isp_OP[0,:], ',g')
+                    ax.plot(tsp[iSpick],  isp_OP, ',g')
 
                 ax.plot([step0*dt, (step0+nt_)*dt], [npSC, npSC], '-k', lw = 0.05)
                 
@@ -3096,7 +3096,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[eSpick_bg], isp_OP[0,:], ',m')
+                    ax.plot(tsp[eSpick_bg],  isp_OP, ',m')
 
                 # inh
                 OP_len = [sum(np.logical_and(spScatter[ix]>=step0*dt, spScatter[ix]<(step0+nt_)*dt)) for ix in V1_range[iIpick]]
@@ -3109,7 +3109,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[iSpick_bg], isp_OP[0,:], ',g')
+                    ax.plot(tsp[iSpick_bg],  isp_OP, ',g')
                 ax.plot([step0*dt, (step0+nt_)*dt], [npSC, npSC], '-k', lw = 0.05)
    
                 # FFT, FR Complex OP Exc
@@ -3203,7 +3203,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[eSpick], isp_OP[0,:], ',r')
+                    ax.plot(tsp[eSpick],  isp_OP, ',r')
                 # inh
                 OP_len = [sum(np.logical_and(spScatter[ix]>=step0*dt, spScatter[ix]<(step0+nt_)*dt)) for ix in V1_range[iIpick]]
                 nOP = np.sum(iIpick)
@@ -3215,7 +3215,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[iSpick], isp_OP[0,:], ',b')
+                    ax.plot(tsp[iSpick],  isp_OP, ',b')
                 ax.plot([step0*dt, (step0+nt_)*dt], [npSC, npSC], '-k', lw = 0.05)
 
                 # scatter BG 
@@ -3235,7 +3235,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[eSpick_bg], isp_OP[0,:], ',r')
+                    ax.plot(tsp[eSpick_bg],  isp_OP, ',r')
 
                 # inh
                 OP_len = [sum(np.logical_and(spScatter[ix]>=step0*dt, spScatter[ix]<(step0+nt_)*dt)) for ix in V1_range[iIpick]]
@@ -3248,7 +3248,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     npSC = npSC + nOP
-                    ax.plot(tsp[iSpick_bg], isp_OP[0,:], ',b')
+                    ax.plot(tsp[iSpick_bg],  isp_OP, ',b')
 
                 # FFT, FR Simple OP Exc
                 pick = eORpick[nLGN_V1[eORpick] > SCsplit]
@@ -3304,7 +3304,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     n_pSC_pLR = n_pSC_pLR + nOP
-                    ax.plot(tsp[eSpick], isp_OP[0,:], ',r')
+                    ax.plot(tsp[eSpick],  isp_OP, ',r')
                 OP_len = [sum(np.logical_and(spScatter[ix]>=step0*dt, spScatter[ix]<(step0+nt_)*dt)) for ix in V1_range[iIpick]]
                 nOP = np.sum(iIpick)
                 if nOP > 0:
@@ -3315,7 +3315,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     n_pSC_pLR = n_pSC_pLR + nOP
-                    ax.plot(tsp[iSpick], isp_OP[0,:], ',b')
+                    ax.plot(tsp[iSpick],  isp_OP, ',b')
 
                 ax.plot([step0*dt, (step0+nt_)*dt], [n_pSC_pLR, n_pSC_pLR], '-k', lw = 0.05)
             
@@ -3334,7 +3334,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     n_pSC_pLR = n_pSC_pLR + nOP
-                    ax.plot(tsp[eSpick_bg], isp_OP[0,:], ',r')
+                    ax.plot(tsp[eSpick_bg],  isp_OP, ',r')
                 OP_len = [sum(np.logical_and(spScatter[ix]>=step0*dt, spScatter[ix]<(step0+nt_)*dt)) for ix in V1_range[iIpick]]
                 nOP = np.sum(iIpick)
                 if nOP > 0:
@@ -3345,7 +3345,7 @@ def plotV1_response(output_suffix0, res_suffix, conLGN_suffix, conV1_suffix, res
                         isp_OP = np.array(isp_OP)
 
                     n_pSC_pLR = n_pSC_pLR + nOP
-                    ax.plot(tsp[iSpick_bg], isp_OP[0,:], ',b')
+                    ax.plot(tsp[iSpick_bg],  isp_OP, ',b')
 
                 nnE = eORpick.size
                 if np.sum(eSpick) > 0:

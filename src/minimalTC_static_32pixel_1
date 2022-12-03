@@ -19,8 +19,8 @@ TF=8 # input frequency if applicable
 SF=20
 trial_suffix=static_32pixel
 bin_prefix=sample_OutAndInputCount_ 
-# singleOri=False
-singleOri=True
+singleOri=False
+# singleOri=True
 one_ori=1 #控制从第几个开始
 
 res_suffix=minimal-patch
@@ -180,26 +180,32 @@ if [ "$plotTConly" = False ]; then
 			# RETURN=$?			
 			# done
 			export ori
-			./ori.sh > ${fig_fdr}/log/pOri_${date}_${trial_suffix}_${ori}_${plotOnly}.out 2>&1 &
+			# ./ori.sh > ${fig_fdr}/log/pOri_${date}_${trial_suffix}_${ori}_${plotOnly}.out 2>&1 &
+			# jobID+="${!} "
+			# # wait $jobID
+			# if [ "$plotOnly" = False ]; then
+			# 	if [ "${ori}" -lt "${nOri}" ]; then
+			# 		vim -s ${cfg_fdr}/nextOri_random_cfg.keys ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg
+			# 		if [ "$((ori+1))" -lt "${nOri}" ]; then
+			# 			cp ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg ${fig_fdr}/${trial_suffix}-ori_$((ori+2)).cfg
+			# 		fi
+			# 	fi
+			# fi
+			# k=$((k+1))
+			# if [ $k -eq 2 ];then
+			# 	k=0
+			# 	echo $ori
+			# 	wait $jobID
+				# echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix}
+				# python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix} &
+			echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix}
+			python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix} &
 			jobID+="${!} "
-			# wait $jobID
-			if [ "$plotOnly" = False ]; then
-				if [ "${ori}" -lt "${nOri}" ]; then
-					vim -s ${cfg_fdr}/nextOri_random_cfg.keys ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg
-					if [ "$((ori+1))" -lt "${nOri}" ]; then
-						cp ${fig_fdr}/${trial_suffix}-ori_$((ori+1)).cfg ${fig_fdr}/${trial_suffix}-ori_$((ori+2)).cfg
-					fi
-				fi
-			fi
 			k=$((k+1))
-			if [ $k -eq 2 ];then
+			if [ $k -eq 10 ];then
 				k=0
 				echo $ori
 				wait $jobID
-				echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix}
-				python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} $((ori-1)) ${bin_prefix} &
-				echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix}
-				python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix} &
 				jobID=""
 			fi
 		done
