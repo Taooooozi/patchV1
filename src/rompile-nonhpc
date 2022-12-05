@@ -10,7 +10,7 @@ optflag=O0
 gptflag=lineinfo
 cpp_version=c++11
 
-sm=sm_86
+sm=sm_75
 
 nvcc -arch=$sm -rdc=true -Xcompiler -rdynamic -Xptxas -v,-dlcm=cg -$gptflag -std=$cpp_version -$optflag -c retinotopic_connections.cu -o retino.o
 nvcc -arch=$sm -rdc=true -Xcompiler -rdynamic -Xptxas -v,-dlcm=cg -$gptflag -std=$cpp_version -$optflag -c Dow_et_al_1981.cu -o dow.o

@@ -7,9 +7,9 @@ gptflag=lineinfo
 cpp_version=c++17
 #fast_math=' -use_fast_math'
 fast_math=''
-CUDA_LIB=/usr/local/cuda-11.3/lib64/
+CUDA_LIB= /home/ljy/miniconda3/envs/neuro/lib/
 
-sm=sm_86
+sm=sm_75
 
 rm -f patch.o 
 nvcc -arch=$sm -rdc=true -Xcompiler -rdynamic -Xptxas -v,-dlcm=cg -$gptflag${fast_math} -std=$cpp_version -$optflag -c patch.cu -o patch.o 

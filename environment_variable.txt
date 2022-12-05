@@ -1,0 +1,7 @@
+export PATCH_V1=$HOME/repos/patchV1
+export PYTHONPATH="$HOME/repos/patchV1/src":"$HOME/repos/patchV1/":"$HOME/repos/patchV1/src/util":$PYTHONPATH
+export CPLUS_INCLUDE_PATH=$HOME/miniconda3/envs/neuro/cuda-samples/common/inc:$HOME/miniconda3/envs/neuro/lib:$HOME/miniconda3/envs/neuro/include/python3.10:$HOME/miniconda3/envs/neuro/lib/python3.10/site-packages/numpy/core/include:$CPLUS_INCLUDE_PATH
+export LD_LIBRARY_PATH=$HOME/miniconda3/envs/neuro/lib:$LD_LIBRARY_PATH
+export LIBRARY_PATH=$HOME/miniconda3/envs/neuro/lib:$LIBRARY_PATH
+export CUDA_LIB=$HOME/miniconda3/envs/neuro/lib:$CUDA_LIB
+export PATH=$HOME/bin/:$PATH
