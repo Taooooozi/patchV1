@@ -12,19 +12,28 @@ date
 if [ "$plotOnly" = False ]; then
 	echo ${patch} -c $patch_cfg
 	${patch} -c $patch_cfg
+	RETURN=$?
+	while [ $RETURN -ne 0 ];  
+	do
+	sleep 10
+	echo sleep 10
+	${patch} -c $patch_cfg
+	RETURN=$?
+	echo $RETURN
+	done
 	date
 fi
 
-# usePrefData=False
-# collectMeanDataOnly=False
+usePrefData=False
+collectMeanDataOnly=False
 
-# if [ "$fitTC" = True ]; then
-# 	OPstatus=0
-# else
-# 	OPstatus=1
-# fi
-# OPstatus=1
-# echo python
+if [ "$fitTC" = True ]; then
+	OPstatus=0
+else
+	OPstatus=1
+fi
+OPstatus=1
+echo python
 
 # pid=""
 # echo python ${fig_fdr}/plotLGN_response_${trial_suffix}.py ${trial_suffix}_${ori} ${LGN_V1_suffix} ${data_fdr} ${fig_fdr}
