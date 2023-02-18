@@ -210,6 +210,7 @@ if [ "$plotTConly" = False ]; then
 		./ori.sh > ${fig_fdr}/log/pSingle_${date}_${trial_suffix}_${ori}_${plotOnly}.out 2>&1 &
 		job=$!
 		wait $job
+		
 		pid=""
 		echo python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix}
 		python ${fig_fdr}/generate_input_${trial_suffix}.py ${trial_suffix}_1 ${trial_suffix} ${res_suffix} ${LGN_V1_suffix} ${V1_connectome_suffix} ${res_fdr} ${setup_fdr} ${data_fdr} ${TF} ${ori} ${bin_prefix} &
@@ -220,5 +221,5 @@ else
 	./plotTC.sh > ${fig_fdr}/log/pTC_${date}_${trial_suffix}.out 2>&1 &
 	job=$!
 fi
-
+conda deactivate
 #(wait $job && shutdown) &

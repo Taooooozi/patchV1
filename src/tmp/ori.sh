@@ -53,4 +53,4 @@ echo python
 
 wait $pid
 date
-conda activate base
+# conda activate base

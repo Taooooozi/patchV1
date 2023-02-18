@@ -147,6 +147,7 @@ def generate_grating(amp, spatialFrequency, temporalFrequency, direction, npixel
     np.array([neye]).astype('u4').tofile(f)
 
     for i in range(nseq):
+        print('nseq:',i)
         t = time[i]
         nstep = int(np.round(frameRate*t))
         if not nstep == frameRate*t:

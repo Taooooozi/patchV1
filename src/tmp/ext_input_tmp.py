@@ -44,11 +44,15 @@ center = np.pi/2
 wing = np.pi/2
 sharpness = 1
 
+npixel = 16
 n = 1
 c = 0.3
 P = np.arange(0,1,1)
 SF = np.arange(20,30,10)
 D = np.arange(0,1,1)
+# P = np.arange(0,np.pi*2,np.pi/6)
+# SF = np.arange(4,64,4)
+# D = np.arange(0,np.pi,np.pi/12)
 P = P.astype('float32')
 SF = SF.astype('float32')
 D = D.astype('float32')
@@ -67,5 +71,5 @@ for sf in SF:
             crest.astype('f4').tofile(f)
             valley.astype('f4').tofile(f)
             f.close()
-            generate_grating(1.0, sf, TF, orient,32, crest, valley, video_fn, time, phase, sharpness, frameRate =1, ecc = range_deg, buffer_ecc = buffer_deg, gtype='drifting', neye = neye, bar = False, center = center, wing = wing, mask = None, inputLMS = inputLMS,genMovie = True)
+            generate_grating(1.0, sf, TF, orient,npixel, crest, valley, video_fn, time, phase, sharpness, frameRate =1, ecc = range_deg, buffer_ecc = buffer_deg, gtype='drifting', neye = neye, bar = False, center = center, wing = wing, mask = None, inputLMS = inputLMS,genMovie = True)
             n = n+1
